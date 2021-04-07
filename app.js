@@ -1,1 +1,1 @@
-alert('again')
+console.log('again from git server')
