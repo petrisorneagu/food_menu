@@ -81,17 +81,65 @@ const menu = [
     },
 ];
 
+// api call
+const settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=apple",
+    "method": "GET",
+    "headers": {
+        "x-rapidapi-key": "2f469e02a9msh4ff5b560df8e350p164b1ajsn52c13e04800a",
+        "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com"
+    }
+};
+
+$.ajax(settings).done(function (response) {
+    // console.log('res' ,response);
+    // console.log('res' ,response.hints);
+    let testApi = response.hints.map(function (callItems) {
+        //  console.log(callItems.food)
+        return callItems.food;
+    })
+});
+
+
+
 //   const menu to be replaced with an api call
 const sectionCenter = document.querySelector('.section-center');
+const filterBtns = document.querySelectorAll('.filter-btn')
 
 window.addEventListener('DOMContentLoaded', function () {
     displaymenuItems(menu)
 })
 
+// filter bny btns
+filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        const category = e.currentTarget.dataset.id;
+        // console.log(category);
+
+        const menuCategory = menu.filter(function (menuItem) {
+            // console.log(menuItem);
+            if (category === menuItem.category) {
+                return menuItem;
+            }
+        })
+        console.log(menuCategory)
+        // display categories already filtered
+        if (category === 'all') {
+            displaymenuItems(menu)
+        } else {
+            displaymenuItems(menuCategory)
+        }
+    })
+})
+
+
+
 
 function displaymenuItems(menuItems) {
     let displayMenu = menuItems.map(function (item) {
-        console.log(item);
+        // console.log(item);
         return `
             <article class="menu-item">
             <img src=${item.img} alt=${item.title} class="photo" />
@@ -107,7 +155,7 @@ function displaymenuItems(menuItems) {
           </article>
             `;
     })
-    // remove coma separation between menu
+    // remove coma separation between menu items
     displayMenu = displayMenu.join("")
     sectionCenter.innerHTML = displayMenu
 }

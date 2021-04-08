@@ -9,15 +9,20 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body>
     <section class="menu">
       <div class="title">
-        <h2>our menu</h2>
+        <h2>menu</h2>
         <div class="underline"></div>
       </div>
+      <!-- here are filter buttons -->
       <div class="btn-container">
-        
+        <button class="filter-btn" type="button" data-id="all">All</button>
+        <button class="filter-btn" type="button" data-id="breakfast">breakfast</button>
+        <button class="filter-btn" type="button" data-id="lunch">lunch</button>
+        <button class="filter-btn" type="button" data-id="shakes">shakes</button>
       </div>
       <div class="section-center">
  
@@ -25,6 +30,7 @@
       </div>
     </section>
     <script src="app.js"></script>
+
   </body>
 </html>
 
