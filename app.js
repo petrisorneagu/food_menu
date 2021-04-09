@@ -110,6 +110,17 @@ const filterBtns = document.querySelectorAll('.filter-btn')
 
 window.addEventListener('DOMContentLoaded', function () {
     displaymenuItems(menu)
+
+    // use categories from menu - the unique ones
+    const categories = menu.reduce(function (values,item){
+        console.log(item)
+        if(!values.includes(item.category)){
+            values.push(item.category)
+        }
+        return values;
+
+    }, ['all'])
+    console.log(categories)
 })
 
 // filter bny btns
