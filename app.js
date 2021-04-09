@@ -81,71 +81,16 @@ const menu = [
     },
 ];
 
-// api call
-const settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=apple",
-    "method": "GET",
-    "headers": {
-        "x-rapidapi-key": "2f469e02a9msh4ff5b560df8e350p164b1ajsn52c13e04800a",
-        "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com"
-    }
-};
-
-$.ajax(settings).done(function (response) {
-    // console.log('res' ,response);
-    // console.log('res' ,response.hints);
-    let testApi = response.hints.map(function (callItems) {
-        //  console.log(callItems.food)
-        return callItems.food;
-    })
-});
-
 
 
 //   const menu to be replaced with an api call
 const sectionCenter = document.querySelector('.section-center');
-const filterBtns = document.querySelectorAll('.filter-btn')
+const btnContainer = document.querySelector('.btn-container');
 
 window.addEventListener('DOMContentLoaded', function () {
     displaymenuItems(menu)
-
-    // use categories from menu - the unique ones
-    const categories = menu.reduce(function (values,item){
-        console.log(item)
-        if(!values.includes(item.category)){
-            values.push(item.category)
-        }
-        return values;
-
-    }, ['all'])
-    console.log(categories)
+    menuBtns()
 })
-
-// filter bny btns
-filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-        const category = e.currentTarget.dataset.id;
-        // console.log(category);
-
-        const menuCategory = menu.filter(function (menuItem) {
-            // console.log(menuItem);
-            if (category === menuItem.category) {
-                return menuItem;
-            }
-        })
-        console.log(menuCategory)
-        // display categories already filtered
-        if (category === 'all') {
-            displaymenuItems(menu)
-        } else {
-            displaymenuItems(menuCategory)
-        }
-    })
-})
-
-
 
 
 function displaymenuItems(menuItems) {
@@ -169,5 +114,48 @@ function displaymenuItems(menuItems) {
     // remove coma separation between menu items
     displayMenu = displayMenu.join("")
     sectionCenter.innerHTML = displayMenu
+}
+
+function menuBtns(){
+  // use categories from menu - the unique ones
+  const categories = menu.reduce(function (values, item) {
+    console.log(item)
+    if (!values.includes(item.category)) {
+        values.push(item.category)
+    }
+    return values;
+}, ['all']);
+// buttons for categories
+const categoryBtns = categories.map(function (category) {
+    return `
+    <button class="filter-btn" type="button" data-id=${category}>${category}</button>
+    `
+}).join("");
+
+btnContainer.innerHTML = categoryBtns
+const filterBtns = document.querySelectorAll('.filter-btn')
+
+
+// filter bny btns
+filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        const category = e.currentTarget.dataset.id;
+        // console.log(category);
+
+        const menuCategory = menu.filter(function (menuItem) {
+            // console.log(menuItem);
+            if (category === menuItem.category) {
+                return menuItem;
+            }
+        })
+        console.log(menuCategory)
+        // display categories already filtered
+        if (category === 'all') {
+            displaymenuItems(menu)
+        } else {
+            displaymenuItems(menuCategory)
+        }
+    })
+})
 }
 
